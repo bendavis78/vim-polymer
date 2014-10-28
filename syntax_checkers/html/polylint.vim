@@ -6,15 +6,21 @@ let g:loaded_syntastic_html_polylint_checker = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+let g:syntastic_debug = 2
+
 function! SyntaxCheckers_html_polylint_GetHighlightRegex(item)
-    if match(a:item['text'], 'Import resource not found') > -1
-        let href = split(a:item['text'], ': ')[1]
-        return href
+    let import_match = matchlist(a:item['text'], \
+        "\bcouldn't find imported asset \"(.*)\"")
+    if len(import_match) > 0:
+        return import_match[1];
     endif
-    if match(a:item['text'], 'Element not defined') > -1
-        let name = split(a:item['text'], ': ')[1]
-        return split(name, '"')[0]
+
+    let elem_match = matchlist(a:item['text'], \
+        '\vcustom element with name "(.*)" not found.')
+    if len(elem_match) > 0:
+        return elem_match[1];
     endif
+
     return ''
 endfunction
 
@@ -22,14 +28,15 @@ function! SyntaxCheckers_html_polylint_GetLocList() dict
     let makeprg = self.makeprgBuild({})
 
     let errorformat =
-        \ '%Wline %l column %v - Warning: %m,' .
-        \ '%Eline %l column %v - Error: %m,' .
+        \ '%Wwarning line %l, column %v of %f: %m,' .
+        \ '%Eerror line %l, column %v of %f: %m,' .
         \ '%-G%.%#'
 
     return SyntasticMake({
             \ 'makeprg': makeprg,
             \ 'errorformat': errorformat,
-            \ 'defaults': {'bufnr': bufnr("")} })
+            \ 'defaults': {'bufnr': bufnr("")},
+            \ 'returns': [0] })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
