@@ -1,5 +1,5 @@
 " core-style tag support
-syn include @polymerCss syntax/css.vim
+runtime! syntax/css.vim
 unlet b:current_syntax
 
 " Less strict highlighting on element attributes
@@ -17,3 +17,4 @@ syn cluster htmlPreproc add=polymerBoundVarRegion
 syn cluster htmlPreproc add=polymerOneWayBoundVarRegion
 hi link polymerBoundVarRegion Special
 hi link polymerOneWayBoundVarRegion Special
+
