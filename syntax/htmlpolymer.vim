@@ -1,9 +1,10 @@
-" core-style tag support
-runtime! syntax/css.vim
-unlet b:current_syntax
+runtime! syntax/html.vim
 
 " Less strict highlighting on element attributes
 syn match htmlArg contained "\<[-a-zA-Z0-9]\+[ $=>]"me=e-1
+
+syn include @polymerCss syntax/csspolymer.vim
+syn region polymerCssStyle start=+<style+ keepend end=+</style>+ contains=@htmlCss,@polymerCss,htmlTag,htmlEndTag,htmlCssStyleComment,@htmlPreproc
 
 syn region polymerBoundVarRegion matchgroup=Delimiter start="{{" end="}}" keepend
 syn sync match polymerBoundVarRegionSync grouphere polymerBoundVarRegion "^\s*{{\s*$" 
