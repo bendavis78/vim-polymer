@@ -1,4 +1,9 @@
 " core-style tag support
+if exists("main_syntax")
+  if main_syntax != "html"
+    finish
+  endif
+endif
 runtime! syntax/css.vim
 unlet b:current_syntax
 
