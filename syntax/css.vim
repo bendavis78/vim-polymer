@@ -100,17 +100,24 @@ syn match cssVendorProp contained "\(^\|;\|\s\)\@<=-[a-zA-Z_][a-zA-Z0-9_-]*\>"
 
 " Polymer CSS mixins
 syn match cssMixinName contained "\(^\|;\|\s\)\@<=--[a-zA-Z_][a-zA-Z0-9_-]*\>\(\s*:\s*{\)\@="
-syn region cssMixinDefinition contained transparent matchgroup=cssBraces start="\(^\|;\|\s\)--[a-zA-Z_][a-zA-Z0-9_-]*\>:\s*\zs{" end="}" contains=cssDefinition,cssAttrRegion,cssMixinName,cssAttrRegion,css.*Prop,cssComment,cssValue.*,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName fold
+syn region cssMixinDefinition
+    \ contained transparent fold
+    \ matchgroup=cssBraces start="\(^\|;\|\s\)--[a-zA-Z_][a-zA-Z0-9_-]*\>:\s*\zs{" end="}"
+    \ contains=cssDefinition,cssMixinName,cssAttrRegion,css.*Prop,cssComment,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName,"cssValue.*"
+
 syn region cssApplyRegion contained matchgroup=cssApplyName start="\(^\|\s\)@apply\s*(" end=")" oneline keepend
- 
- 
+
 " Redefine cssAttrRegion to exclude mixin regions
 syn clear cssDefinition
-syn region cssDefinition transparent matchgroup=cssBraces start='{' end='}' contains=cssAttrRegion,css.*Prop,cssComment,cssValue.*,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName fold
+syn region cssDefinition
+    \ transparent fold
+    \ matchgroup=cssBraces start='{' end='}'
+    \ contains=cssAttrRegion,css.*Prop,cssComment,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName,"cssValue.*"
 
 syn clear cssAttrRegion
-syn region cssAttrRegion contained start=/:\(\s*{\)\@!/ end=/\ze\(;\|)\|}\)/ contained contains=css.*Attr,cssColor,cssImportant,cssValue.*,cssFunction,cssString.*,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise
-
+syn region cssAttrRegion
+    \ contained start=/:\(\s*{\)\@!/ end=/\ze\(;\|)\|}\)/
+    \ contains=cssColor,cssImportant,cssValue,cssFunction,cssString,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise,cssString.*,css.*Attr,"cssValue.*"
 
 hi link polymerElement cssTagName
 hi link customElement cssTagName
