@@ -103,7 +103,7 @@ syn match cssMixinName contained "\(^\|;\|\s\)\@<=--[a-zA-Z_][a-zA-Z0-9_-]*\>\(\
 syn region cssMixinDefinition
     \ contained transparent fold
     \ matchgroup=cssBraces start="\(^\|;\|\s\)--[a-zA-Z_][a-zA-Z0-9_-]*\>:\s*\zs{" end="}"
-    \ contains=cssDefinition,cssMixinName,cssAttrRegion,css.*Prop,cssComment,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName,"cssValue.*"
+    \ contains=cssDefinition,cssMixinName,cssAttrRegion,cssComment,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName,"cssValue.*",css.*Prop
 
 syn region cssApplyRegion contained matchgroup=cssApplyName start="\(^\|\s\)@apply\s*(" end=")" oneline keepend
 
@@ -112,12 +112,12 @@ syn clear cssDefinition
 syn region cssDefinition
     \ transparent fold
     \ matchgroup=cssBraces start='{' end='}'
-    \ contains=cssAttrRegion,css.*Prop,cssComment,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName,"cssValue.*"
+    \ contains=cssAttrRegion,cssComment,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise,cssMixinDefinition,cssMixinName,cssApplyRegion,cssApplyName,"cssValue.*",css.*Prop
 
 syn clear cssAttrRegion
 syn region cssAttrRegion
     \ contained start=/:\(\s*{\)\@!/ end=/\ze\(;\|)\|}\)/
-    \ contains=cssColor,cssImportant,cssValue,cssFunction,cssString,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise,cssString.*,css.*Attr,"cssValue.*"
+    \ contains=cssColor,cssImportant,cssValue,cssFunction,cssString,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise,cssString.*,"cssValue.*",css.*Attr
 
 hi link polymerElement cssTagName
 hi link customElement cssTagName
